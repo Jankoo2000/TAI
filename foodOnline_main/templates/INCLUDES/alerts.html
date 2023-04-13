@@ -1,0 +1,8 @@
+{#                                                using messages without includeing it's because context manager#}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-primary show-notification" role="alert">
+            {{ message }}
+        </div>
+    {%  endfor %}
+{%  endif %}
