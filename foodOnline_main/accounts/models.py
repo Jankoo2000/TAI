@@ -47,10 +47,10 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    RESTAURANT = 1
+    VENDOR = 1
     CUSTOMER = 2
     ROLE_CHOICE = (
-        (RESTAURANT, 'Restaurant'),
+        (VENDOR, 'Restaurant'),
         (CUSTOMER, 'Customer')
     )
     first_name = models.CharField(max_length=50)
@@ -116,7 +116,7 @@ class UserProfile(models.Model):
 
 @receiver(post_save, sender=User)
 def post_save_create_profile_receiver(sender, instance, created, **kwargs):
-    print(created)
+    #print(created)
     if created:
         UserProfile.objects.create(user=instance)
         print('create the user profile')

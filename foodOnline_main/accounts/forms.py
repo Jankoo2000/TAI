@@ -1,5 +1,16 @@
 from django import forms
 from .models import User
+
+"""
+Formularz class Metaw Django to sposób na określenie metadanych dotyczących formularza, takich jak model, 
+z którym formularz jest powiązany, pola do uwzględnienia lub wykluczenia w formularzu oraz wszelkie dodatkowe opcje, które powinny być użyte podczas renderowania formularza
+Generujemy formularze z klasy meta bo nie chcemy zeby wszystkie pola byly w tym formularzu
+
+
+W tym przypadku określamy, że formularz jest powiązany z User 
+i że chcemy uwzględnić tylko pola 'first_name', 'last_name', 'username', 'email', 'phone_number'] 
+z modelu User oraz dodac pole 'password'
+"""
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
