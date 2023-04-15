@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import UserForm
 from .models import User, UserProfile
-from django.contrib import messages
+from django.contrib import messages, auth
 from vendor.forms import VendorForm
 
 def registerUser(request):
@@ -31,14 +31,10 @@ def registerUser(request):
 def registerVendor(request):
     # POST, GET, PUT, DELETE
     # button register is type submit to it's POST function
-    print('-----registerVendor-----------')
     if request.method == 'POST':
         # store the data and create the user
-        print('NNNNNNNN------NNNNNNN')
         form = UserForm(request.POST) # request.POST w Django to słownik, który zawiera dane przesłane przez użytkownika do serwera za pomocą metody HTTP POST po kliknieciu przecisku typu submit.
-        print('NNNNNNNN+++++++NNNNNNN')
         v_form = VendorForm(request.POST, request.FILES)
-        print('MMMMMMMMMMMMMMM')
         if form.is_valid() and v_form.is_valid():
             print('0')
             first_name = form.cleaned_data['first_name']
@@ -47,29 +43,20 @@ def registerVendor(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = User.objects.create_user(first_name, last_name, username, email, password)
-            print('1')
             user.role = User.VENDOR
             user.save()
-            print('2')
             vendor = v_form.save(commit=False) # vendor only with vendor_name and vendor_license
-            print('3')
             vendor.user = user # OneToOneFiled
-            print('4')
             user_profile = UserProfile.objects.get(user=user)
-            print('5')
             vendor.user_profile = user_profile # OneToOneFiled
-            print('6')
             print(vendor)
             vendor.save()
-            print('7')
             messages.success(request, 'Your account has been registred sucessfully! Please wait for the approval')
             return redirect('registerVendor')
         else:
             print('invalid form')
             print(form.errors)
     else:
-        print('$$$$$$$$$registerVendor$$$$$$$$$$$$$')
-
         # generate forms and print html
         form = UserForm()
         v_form = VendorForm()
@@ -77,5 +64,30 @@ def registerVendor(request):
             'form' : form,
             'v_form' : v_form
         }
-        print('yolo')
         return render(request, 'accounts/registerVendor.html', context)
+
+def login(request):
+    if request.user.is_authenticated:
+        messages.warning(request, 'You are already logged in')
+        return redirect('dashboard')
+    elif request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = auth.authenticate(email=email, password=password) #  funkcja authenticate() jest użyta do uwierzytelnienia użytkownika na podstawie przesłanych przez niego danych logowania (nazwa użytkownika i hasło
+        if user is not None:
+            auth.login(request, user)
+            #messages.success(request, 'You are now logged in')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Invalid login credentials')
+            return redirect('login')
+    return render(request, 'accounts/login.html')
+
+def logout(request):
+    auth.logout(request)
+    messages.info(request, 'You are logged out')
+    return redirect('login')
+
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html')
+
