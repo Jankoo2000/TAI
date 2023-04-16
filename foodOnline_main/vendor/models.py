@@ -9,7 +9,7 @@ class Vendor(models.Model):
     user_profile = models.OneToOneField(UserProfile, related_name='user_profile', on_delete=models.CASCADE)
     vendor_name = models.CharField(max_length=50)
     vendor_license = models.ImageField(upload_to='vendor/license')
-    is_approved = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=True) # True to not to do veryfication, admin can veryfy it in admin panel
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
