@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'includes/alerts.html' %}
+
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+        <div class="main-section">
+            {% include 'includes/cover.html' %}
+			<div class="page-section account-header buyer-logged-in">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            {% include 'includes/v_sidebar.html' %} {# sidebar #}
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+							<div class="user-dashboard loader-holder">
+								<div class="user-holder">
+                                    <h5 class="text-uppercase">Edit  category</h5> {# 64 #}
+
+                                    <form action="{% url 'edit_category' category.id %}" method = "POST">{# whre should it be submitted #}
+                                        {% csrf_token %}
+                                        {{ form  }}
+                                        <button type="submit" class="btn btn-info">Update </button>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

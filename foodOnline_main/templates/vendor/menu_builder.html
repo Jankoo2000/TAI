@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'includes/alerts.html' %}
+
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+        <div class="main-section">
+            {% include 'includes/cover.html' %}
+			<div class="page-section account-header buyer-logged-in">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            {% include 'includes/v_sidebar.html' %} {# sidebar #}
+						</div>
+						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+							<div class="user-dashboard loader-holder">
+								<div class="user-holder">
+                                    <h5 class="text-uppercase">Build your food menu</h5> {# 64 #}
+{#                                    <a class="btn btn-primary" href="#" role="button">ADD FOOD</a>#}
+                                    <a href="{% url 'add_category' %} " class="btn btn-info"><i class="fa fa-info-circle"></i> ADD CATEGORY</a>
+                                    <a href="{% url 'add_category' %} " class="btn btn-info"><i class="fa fa-info-circle"></i> ADD FOOD</a>
+
+
+
+                                        <table class="table table-striped">
+                                          {% for cat in categories %}
+                                            <tr>
+                                              <th>{{ forloop.counter }}</th>
+                                                <td><a href="{% url 'fooditems_by_category' cat.id %}"><p class="mb-0 font-weight-bold">{{ cat.category_name }}</p></a></td>
+                                                <td><a href="{% url 'edit_category' cat.id %}"><i class="glyphicon glyphicon-edit"></i></a></td>
+                                                <td><a href="{% url 'delete_category' cat.id %}" onclick="return confirm('Are you sure you want to delet this catategory')"><i class="glyphicon glyphicon-trash"></i></a></td>
+
+                                            </tr>
+                                          {% endfor %}
+                                          </tbody>
+
+                                        </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}
