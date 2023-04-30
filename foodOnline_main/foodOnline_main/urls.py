@@ -22,5 +22,5 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', views.home, name='home'),
-    path('accounts/', include('accounts.urls')), # function that takes a full Python import path to another URLconf module that should be “included” in this place
+    path('', include('accounts.urls')), # function that takes a full Python import path to another URLconf module that should be “included” in this place
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #25

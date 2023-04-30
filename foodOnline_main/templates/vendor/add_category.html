@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    {% include 'includes/alerts.html' %}
 
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,6 +27,7 @@
                                         <button type="submit" class="btn btn-info">Create </button>
                                     </form>
 
+                                    {% include 'includes/alerts.html' %}
 
                                 </div>
                             </div>
