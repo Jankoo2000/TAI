@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.template.defaultfilters import slugify
 
 from vendor.models import Vendor
 from .forms import UserForm
@@ -61,6 +62,8 @@ def registerVendor(request):
             user.save()
             vendor = v_form.save(commit=False)  # vendor only with vendor_name and vendor_license
             vendor.user = user  # OneToOneFiled
+            vendor_name = v_form.cleaned_data['vendor_name']
+            vendor.vendor_slug = slugify(vendor_name) + '-' + str(user.id) # if there are vendor with the same names
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile  # OneToOneFiled
             print(vendor)

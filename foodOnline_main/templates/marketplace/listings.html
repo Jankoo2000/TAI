@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+		<!-- Main Section Start -->
+			</div>
+			<div class="page-section nopadding cs-nomargin" style="margin-top: 0px;padding-top: 60px;padding-bottom: 10px;margin-bottom: 0px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<aside class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<div class="filter-wrapper">
+										<div class="foodbakery-filters listing-filter">
+											<div class="filter-holder panel-default">
+												<div class="filter-heading">
+													<h6><i class="icon-food"></i>Cuisines</h6>
+												</div>
+												<div class="select-categories">
+													<ul class="filter-list cs-checkbox-list">
+														<li>
+															<div class="checkbox">
+																<input type="checkbox" id="foodbakery_restaurant_category_1" class="foodbakery_restaurant_category" value="apple-juice">
+																<label for="foodbakery_restaurant_category_1">Apple
+																	Juice</label>
+																<span>(5)</span>
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</aside>
+								<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+									<div class="listing-sorting-holder">
+										<div class="row">
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												<h4>{{ vendor_count }} Restaurant's found</h4>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="listing simple">
+										<ul>
+                                            {% for vendor in vendors %}
+											<li>
+												<div class="img-holder">
+													<figure>
+                                                        <a href="#">
+                                                        {% if vendor.user_profile.profile_picture %}
+														    <img src="{{ vendor.user_profile.profile_picture.url }}" class="img-list wp-post-image" alt=""></a>
+													    {% else %}
+														    <img src="{% static 'images/default-profile.PNG' %}" class="img-list wp-post-image" alt=""></a>
+                                                        {% endif %}
+                                                    </figure>
+												</div>
+												<div class="text-holder">
+													<div class="list-rating">
+														<div class="rating-star">
+															<span class="rating-box" style="width: 100%;"></span>
+														</div>
+														<span class="reviews">(1)</span>
+													</div>
+													<div class="post-title">
+														<h5>
+															<a href="listing-detail.html">{{ vendor.vendor_name }}</a>
+														</h5>
+													</div>
+													<span class="post-categories"><span>Type of food :
+														</span> Apple
+														Juice</span>
+													<div class="delivery-potions">
+														<span>{{ vendor.user_profile.address_line_1 }}</span>
+													</div>
+												</div>
+												<div class="list-option">
+													<a href="{% url 'vendor_detail' vendor.vendor_slug %}" class="viewmenu-btn text-color">View Menu</a>
+												</div>
+											</li>
+                                            {% endfor %}
+										</ul>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Main Section End -->
+
+{% endblock %}
