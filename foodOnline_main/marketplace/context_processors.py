@@ -3,10 +3,9 @@ from menu.models import FoodItem
 
 """
 A function defined in a context processor in Django 
-is executed for every request that is processed by the Django application (in this case marketplace application). 
+is executed for every request that is processed by the Django application (in this case marketplace application). (probably not only)
 This means that the function is called every time some url or function from this app is used, 
 regardless of which view function is handling the request.
-
 Funtions must return dict
 """
 def get_cart_counter(request):

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h3>{{ user.username }}</h3> {# przekazywane  w context przez formularz ??#}
+{#            {% include 'customers/cover.html' %}#}
+			<div class="page-section account-header buyer-logged-in">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            {% include 'includes/c_sidebar.html' %} {# sidebar #}
+                        </div>
+						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+							<div class="user-dashboard loader-holder">
+								<div class="user-holder">
+
+                                    <h5 class="text-uppercase" >Profile Settings</h5>
+{#                                    Atrybut action w HTML służy do określenia adresu URL, #}
+{#                                    do którego zostanie wysłany formularz po jego wypełnieniu i przesłaniu. #}
+{#                                    W Django, atrybut ten jest używany wraz z elementem <form>.#}
+{#                                      "multipart/form-data" - enkodowanie zdjec#}
+                                    <form action="{% url 'cprofile' %}" method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ user_form }}
+                                        {{ profile_form }}
+
+                                        <div class="field-holder">
+                                            <div class="payment-holder input-button-loader">
+                                                <input class="update-restaurant" type="submit" value="Update Profile">
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% include 'includes/alerts.html' %}
+{% endblock %}

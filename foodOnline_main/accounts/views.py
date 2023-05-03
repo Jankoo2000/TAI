@@ -129,8 +129,8 @@ def myAccount(requst):
     redirectUrl = detectUser(user)
     return redirect(redirectUrl)
 
-# Restrict the vendor from accessomg the customer page
-# e.x logged customer could enter /vendorDashboard/
+# Restrict the vendor from accessomg the customers page
+# e.x logged customers could enter /vendorDashboard/
 @login_required(login_url='login')
 @user_passes_test(check_role_customer) #  dekorator funkcji, którego można użyć do ograniczenia dostępu do widoków na podstawie warunku sprawdzanego pod kątem bieżącego użytkownika.
 def custDashboard(request):

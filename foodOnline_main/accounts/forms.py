@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, UserProfile
 
 """
 Formularz class Metaw Django to sposób na określenie metadanych dotyczących formularza, takich jak model, 
@@ -30,3 +30,14 @@ class UserForm(forms.ModelForm):
             raise forms.ValidationError(
                 "Password does not match" # print in html {{ form.non_filed_errors }}
             )
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['profile_picture', 'cover_photo', 'address_line_1', 'address_line_2', 'country', 'pin_code']
+
+
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'phone_number']
