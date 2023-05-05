@@ -2,10 +2,6 @@
 {% load static %}
 {% block content %}
 
-
-
-
-
     <div class="page-section pt-5">
         <div class="container">
             <div class="row">
@@ -91,12 +87,11 @@
                                                     <span class="price float-right">
                                                     <b><span id="total">{{ total_price }}</span></b> {# context processor var form dictionary #}
                                                     <b><span class="currency">zł</span></b>
-                                                    <br>  <br>
+                                                    <br>
                                                     </span>
 
-
                                             </li>
-
+                                                <a href="{% url 'checkout' %}" class="btn btn-danger w-100 p-2 mt-3">  CHECKOUT  </a>
                                         </ul>
                                     </div>
                                 </div>

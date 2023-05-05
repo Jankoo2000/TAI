@@ -1,3 +1,4 @@
+from foodOnline_main import settings
 from vendor.models import Vendor
 
 """
@@ -13,3 +14,7 @@ def get_vendor(request): # 60, 61
     return dict(vendor=vendor)  # vendor=vendor oznacza, że klucz w słowniku będzie miał nazwę vendor, a wartość
                                 # będzie zmienną vendor. Innymi słowy, tworzymy słownik, który ma tylko jeden klucz vendor i jego wartość jest
                                 # przypisana do zmiennej vendor.
+
+
+def get_paypal_client_id(request):
+    return {'PAYPAL_CLIENT_ID' : settings.PAYPAL_CLIENT_ID}

@@ -35,4 +35,4 @@ def get_cart_amounts(request):
             total_price += (fooditem.price * item.quantity)
     x = dict(total_price=total_price)
     print(x)
-    return x
+    return dict(total_price=total_price)

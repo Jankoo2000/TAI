@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="page-section pt-5">
+        <div class="container">
+            <div class="row">
+{#                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 sticky-sidebar">#}
+{#                </div>#}
+                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-8" >
+                    <div class="tabs-holder horizontal">
+                        <ul class="stickynav-tabs nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home"><i class="icon- icon-room_service"></i>REVIEW BILLING ADRESS</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="home" class="tab-pane in active">
+                                <div class="menu-itam-holder">
+                                    <div id="menu-item-list-6272" class="menu-itam-list">
+                                        <div><b>{{ order.name }}</b></div>
+                                            <div><b>{{ order.last_name }}</b></div>
+                                            <div><b>Phone : {{ order.phone }}</b></div>
+                                            <div><b>Email : {{ order.email }}</b></div>
+                                            <div><b>{{ order.address }} - {{ order.pin_code }}</b></div>
+                                            <div><b>{{ order.city }}, {{ order.country }}</b></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" >
+                    <div class="tabs-holder horizontal">
+                        <ul class="stickynav-tabs nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#home"><i class="icon- icon-room_service"></i>ORDER</a></li>
+                        </ul>
+
+                        <div class="tab-content pt-10" >
+                            <div id="home" class="tab-pane in active">
+                                <div class="menu-itam-holder">
+                                    <div>
+                                        <ul>
+                                            <li style="list-style-type: none">
+                                                <br>
+                                                <b>TOTAL PRICE</b>
+                                                    <span class="price float-right">
+                                                    <b><span id="total">{{ total_price }}</span></b>
+                                                    <b><span class="currency">zł</span></b>
+                                                    <br>
+                                                    </span>
+
+                                            </li>
+                                                <div id="paypal-button-container"></div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+			</div>
+        </div>
+    </div>
+</div>
+
+    <script>
+
+        var total = '{{ total_price }}';
+        var url = "{% url 'payments' %}";
+        var order_number = "{{ order.order_number }}";
+        var order_complete = "{% url 'order_complete' %}"
+        paypal.Buttons({
+
+            createOrder: function (data, actions)
+            {
+                return actions.order.create({
+                   purchase_units: [{
+                       amount : {value : total}
+                   }]
+                });
+            },
+
+            onApprove : function (data, actions)
+            {
+                return actions.order.capture().then(function (orderData)
+                {
+                    console.log(orderData)
+                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                    console.log(transaction.id)
+
+                    var transaction_id = transaction.id
+                    var status = orderData.status
+                    var payment_method = 'PayPal'
+                    sendTransaction(transaction_id, payment_method, status);
+                });
+            }
+
+        }).render('#paypal-button-container');
+
+        function sendTransaction(transaction_id, payment_method, status)
+        {
+            $.ajax({
+                type : 'POST',
+                url : url,
+                data : {
+                    'order_number' : order_number,
+                    'transaction_id' : transaction_id,
+                    'payment_method' : payment_method,
+                    'status' : status,
+                    'csrfmiddlewaretoken' : '{{ csrf_token }}',
+
+                },
+                {# Response  from def payments(request): #}
+                success: function (response){
+                    console.log('response ==>', response)
+                    window.location.href = order_complete + '?order_no=' + response.order_number + '&trans_id=' + response.transaction_id
+                }
+            })
+            return true;
+        }
+
+    </script>
+
+			<!-- Main Section End -->
+{% endblock %}
