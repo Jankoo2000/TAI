@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 
+from orders.models import Order
 from vendor.models import Vendor
 from .forms import UserForm
 from .models import User, UserProfile
@@ -63,7 +64,7 @@ def registerVendor(request):
             vendor = v_form.save(commit=False)  # vendor only with vendor_name and vendor_license
             vendor.user = user  # OneToOneFiled
             vendor_name = v_form.cleaned_data['vendor_name']
-            vendor.vendor_slug = slugify(vendor_name) + '-' + str(user.id) # if there are vendor with the same names
+            vendor.vendor_slug = slugify(vendor_name) + '-' + str(user.id)  # if there are vendor with the same names
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile  # OneToOneFiled
             print(vendor)
@@ -115,6 +116,7 @@ def check_role_vendor(user):
     else:
         raise PermissionDenied
 
+
 def check_role_customer(user):
     if user.role == 2:
         return True
@@ -125,21 +127,24 @@ def check_role_customer(user):
 # Only authenticated users can access this view
 @login_required(login_url='login')
 def myAccount(requst):
-    user = requst.user # When a user is authenticated, the request.user object will contain information about the currently logged in user, such as their username, email, and other attributes.
+    user = requst.user  # When a user is authenticated, the request.user object will contain information about the currently logged in user, such as their username, email, and other attributes.
     redirectUrl = detectUser(user)
     return redirect(redirectUrl)
+
 
 # Restrict the vendor from accessomg the customers page
 # e.x logged customers could enter /vendorDashboard/
 @login_required(login_url='login')
-@user_passes_test(check_role_customer) #  dekorator funkcji, którego można użyć do ograniczenia dostępu do widoków na podstawie warunku sprawdzanego pod kątem bieżącego użytkownika.
+@user_passes_test(check_role_customer)  # dekorator funkcji, którego można użyć do ograniczenia dostępu do widoków na podstawie warunku sprawdzanego pod kątem bieżącego użytkownika.
 def custDashboard(request):
-    return render(request, 'accounts/custDashboard.html')
+    orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')[:5]
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'accounts/custDashboard.html', context)
+
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request):
     return render(request, 'accounts/vendorDashboard.html')
-
-
-

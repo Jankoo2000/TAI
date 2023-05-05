@@ -3,9 +3,8 @@
     <div class="user-nav-list">
         <ul>
             <li><a href="{% url 'customers'  %}"><i class="icon-dashboard3"></i>Dashboard</a></li>
-            <li><a href="restaurant-restaurant.html"><i class="icon-building"></i>My Orders</a></li>
+            <li><a href="{% url 'my_orders' %}"><i class="icon-building"></i>My Orders</a></li>
             <li><a href="{% url 'cprofile' %}"><i class="icon-menu5"></i>Profile Settings</a></li>
-            <li><a id="profile_delete" href="#"><i class="icon-delete"></i>Change Password</a></li>
             <li><a class="logout-btn" href="{% url 'logout' %}"><i class="icon-log-out"></i>Signout</a></li>
         </ul>
     </div>

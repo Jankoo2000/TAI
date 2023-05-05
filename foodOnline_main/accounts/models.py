@@ -113,12 +113,10 @@ class UserProfile(models.Model):
     state = models.CharField(max_length=15, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     pin_code = models.CharField(max_length=6, blank=True, null=True)
-    latitude = models.CharField(max_length=20, blank=True, null=True)
-    longtitude = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)  # date is unchangeable
     modified_at = models.DateTimeField(auto_now=True)  # when object is modyfied date will be changed
 
-    # conected to table User througt OneToOneField
+
     def __str__(self):
         return self.user.email
 

@@ -38,17 +38,14 @@ class Order(models.Model):
     email = models.EmailField(max_length=50)
     address = models.CharField(max_length=200)
     country = models.CharField(max_length=15, blank=True)
-    # state = models.CharField(max_length=15, blank=True)
     city = models.CharField(max_length=50)
     pin_code = models.CharField(max_length=10)
     total = models.FloatField()
-    # payment_method = models.CharField(max_length=25)
     status = models.CharField(max_length=15, choices=STATUS, default='New')
     is_ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # Concatenate first name and last name
     @property
     def name(self):
         return f'{self.first_name} {self.last_name}'
