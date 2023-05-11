@@ -12,10 +12,6 @@
 								<div class="user-holder">
 
                                     <h5 class="text-uppercase" >Profile Settings</h5>
-{#                                    Atrybut action w HTML służy do określenia adresu URL, #}
-{#                                    do którego zostanie wysłany formularz po jego wypełnieniu i przesłaniu. #}
-{#                                    W Django, atrybut ten jest używany wraz z elementem <form>.#}
-{#                                      "multipart/form-data" - enkodowanie zdjec#}
                                     <form action="{% url 'cprofile' %}" method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         {{ user_form }}
