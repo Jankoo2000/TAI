@@ -33,12 +33,12 @@ def cprofile(request):
     return render(request, 'customers/cprofile.html', context)
 
 
-def my_orders(request):
+def customer_orders(request):
     orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
     context = {
         'orders': orders,
     }
-    return render(request, 'customers/my_orders.html', context)
+    return render(request, 'customers/customerOrders.html', context)
 
 
 def order_details(request, order_number):
@@ -46,9 +46,14 @@ def order_details(request, order_number):
         order = Order.objects.get(order_number=order_number, is_ordered=True)
         ordered_food = OrderedFood.objects.filter(order=order)
 
+        total_price = 0
+        for food in ordered_food:
+            total_price += food.price * food.quantity
+
         context = {
             'order': order,
             'ordered_food': ordered_food,
+            'total_price': total_price,
         }
         return render(request, 'customers/order_details.html', context)
 

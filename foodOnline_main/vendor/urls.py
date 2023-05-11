@@ -15,4 +15,7 @@ urlpatterns = [
     path('menu-builder/food/edit/<int:pk>', views.edit_food, name='edit_food'),
     path('menu-builder/food/delete/<int:pk>', views.delete_food, name='delete_food'),
 
+    path('orders/', AccountViews.vendorOrders, name='vendor_orders'),
+    path('order_detail/<str:order_number>/', views.order_detail, name='vendor_order_detail'),
+
 ]

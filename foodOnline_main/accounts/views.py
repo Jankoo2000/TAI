@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
 
-from orders.models import Order
+from orders.models import Order, OrderedFood
 from vendor.models import Vendor
 from .forms import UserForm
 from .models import User, UserProfile
@@ -48,8 +48,7 @@ def registerVendor(request):
     # button register is type submit to it's POST function
     elif request.method == 'POST':
         # store the data and create the user
-        form = UserForm(
-            request.POST)  # request.POST w Django to słownik, który zawiera dane przesłane przez użytkownika do serwera za pomocą metody HTTP POST po kliknieciu przecisku typu submit.
+        form = UserForm(request.POST)  # request.POST w Django to słownik, który zawiera dane przesłane przez użytkownika do serwera za pomocą metody HTTP POST po kliknieciu przecisku typu submit.
         v_form = VendorForm(request.POST, request.FILES)
         if form.is_valid() and v_form.is_valid():
             print('0')
@@ -135,16 +134,54 @@ def myAccount(requst):
 # Restrict the vendor from accessomg the customers page
 # e.x logged customers could enter /vendorDashboard/
 @login_required(login_url='login')
-@user_passes_test(check_role_customer)  # dekorator funkcji, którego można użyć do ograniczenia dostępu do widoków na podstawie warunku sprawdzanego pod kątem bieżącego użytkownika.
+@user_passes_test(
+    check_role_customer)  # dekorator funkcji, którego można użyć do ograniczenia dostępu do widoków na podstawie warunku sprawdzanego pod kątem bieżącego użytkownika.
 def custDashboard(request):
     orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')[:5]
+
     context = {
         'orders': orders,
+
     }
     return render(request, 'accounts/custDashboard.html', context)
+
+
+"""
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    authors = models.ManyToManyField(Author)
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    birth_date = models.DateField()
+    
+books = Book.objects.filter(authors__name='J.K. Rowling')
+    """
 
 
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request):
-    return render(request, 'accounts/vendorDashboard.html')
+    vendor = Vendor.objects.get(user=request.user)
+    orders = Order.objects.filter(vendors__id__in=[vendor.id],  # vendors__id_in == vendors__in
+                                  is_ordered=True).order_by('-created_at')  # columnName__in=[value1, value2] == WHERE column_name IN (value1, value2, ...);
+    recent_orders = orders[:5]
+
+    context = {
+        'orders': orders,
+        'recent_orders': recent_orders,
+    }
+    return render(request, 'accounts/vendorDashboard.html', context)
+
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def vendorOrders(request):
+    vendor = Vendor.objects.get(user=request.user)
+    orders = Order.objects.filter(vendors__id__in=[vendor.id],  # vendors__id_in == vendors__in
+                                  is_ordered=True).order_by('-created_at')  # columnName__in=[value1, value2] == WHERE column_name IN (value1, value2, ...);
+
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'vendor/vendorOrders.html', context)

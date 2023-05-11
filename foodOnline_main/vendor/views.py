@@ -5,6 +5,7 @@ from django.contrib import messages
 from accounts.views import check_role_vendor
 from menu.forms import CategoryForm, FoodItemForm
 from menu.models import Category, FoodItem
+from orders.models import Order, OrderedFood
 from vendor.models import Vendor
 
 
@@ -19,7 +20,6 @@ def vprofile(request):
 def menu_builder(request):
     vendor = Vendor.objects.get(user=request.user)  # pobieranie obiekty (z bazy danych) ktory ma dane requrst.user
     categories = Category.objects.filter(vendor=vendor).order_by('created_at')
-    # food = FoodItem.objects.filter(vendor=vendor, category=categories.get(category_name='kebab'))
     food = FoodItem.objects.filter(vendor=vendor)
     context = {
         'categories': categories
@@ -31,9 +31,7 @@ def menu_builder(request):
 @user_passes_test(check_role_vendor)
 def fooditems_by_category(request, pk=None):
     vendor = Vendor.objects.get(user=request.user)
-    # category = get_object_or_404(Category, pk=pk) # retive from databse, Calls get() on a given model manager, but it raises Http404 instead of the model’s DoesNotExist exception.
     category = Category.objects.get(pk=pk)
-    # print(category)
     foodItems = FoodItem.objects.filter(vendor=vendor, category=category)
     context = {
         'foodItems': foodItems
@@ -121,7 +119,8 @@ def add_food(request):
             print(form.errors)
     else:
         form = FoodItemForm()
-        form.fields['category'].queryset = Category.objects.filter(vendor=Vendor.objects.get(user=request.user)) # zeby nie pobieraly sie wszystkie kategorie jedzenia tylko katergorie jedzenia danego sprzedacwy
+        form.fields['category'].queryset = Category.objects.filter(vendor=Vendor.objects.get(
+            user=request.user))  # zeby nie pobieraly sie wszystkie kategorie jedzenia tylko katergorie jedzenia danego sprzedacwy
         context = {
             'form': form,
         }
@@ -150,7 +149,8 @@ def edit_food(request, pk=None):
     else:
         form = FoodItemForm(
             instance=food)  # tworzenie nowej instancji Cateogry form i przekazywanie jej danych z instancji category
-        form.fields['category'].queryset = Category.objects.filter(vendor=Vendor.objects.get(user=request.user)) # zeby nie pobieraly sie wszystkie kategorie jedzenia tylko katergorie jedzenia danego sprzedacwy
+        form.fields['category'].queryset = Category.objects.filter(vendor=Vendor.objects.get(
+            user=request.user))  # zeby nie pobieraly sie wszystkie kategorie jedzenia tylko katergorie jedzenia danego sprzedacwy
 
     print(form)
     context = {
@@ -167,3 +167,22 @@ def delete_food(request, pk=None):
     food.delete()
     messages.success(request, 'Food has been deleted')
     return redirect('fooditems_by_category', food.category.id)
+
+
+def order_detail(request, order_number):
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_food = OrderedFood.objects.filter(order=order, fooditem__vendor=Vendor.objects.get(user=request.user))
+
+        total_price = 0
+        for food in ordered_food:
+            total_price += food.price * food.quantity
+
+        context = {
+            'order': order,
+            'ordered_food': ordered_food,
+            'total_price': total_price,
+        }
+        return render(request, 'vendor/order_detail.html', context)
+    except:
+        return redirect('vendor')
