@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+{#        <style>#}
+{#        .text-center {#}
+{#            text-align: center;#}
+{#        }#}
+{#        .login-option {#}
+{#            text-align: right;#}
+{#        }#}
+{#    </style>#}
 </head>
 <body>
 
@@ -15,10 +23,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-							<div class="logo">
+							<div class="logo offset-md-20">
 								<figure>
 									<a href="{% url 'home' %}" class="light-logo">
-										<img src="{% static 'extra-images/main-logo.png' %} " alt="FoodBakery">
+										<img src="{% static 'extra-images/main-logo_v3.png' %} " alt="FoodBakery">
 									</a>
 								</figure>
 							</div>
@@ -26,13 +34,12 @@
 								<ul>
 									<li class="location-has-children choose-location">
 										<form action="#">
-                                            <span class="text-center"><input type="text" value="" name="location" placeholder="Enter your  location" autocomplete="off"></span>
-{#											<span id="foodbakery_radius_location_open" class="foodbakery-radius-location"><i class="icon-target5"></i></span>#}
+                                            <span class="text-center"><input type="text" value="" name="location" placeholder="Enter your  location" autocomplete="off" style="width: 400px;"></span>
 										</form>
 
 									</li>
 								</ul>
-								</div>
+                            </div>
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							<div class="login-option">

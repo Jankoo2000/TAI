@@ -15,7 +15,6 @@
                                         <div class="justify-content-center row">
                                             <div class="col-md-12">
                                                 <div class="bg-white p-1">
-                                                    <img src="{% static 'logo/foodOnlineLogo.png' %}" alt="foodOnline Logo" width="300">
 
                                                     <h6>Hello {{ order.name }}, </h6><span>Review your order details below.</span>
                                                     <hr>
@@ -52,12 +51,12 @@
                                                         </tbody>
                                                     </table>
 
-                                                    <div class="row mt-5">
-                                                        <div class="col-md-6">
+                                                    <div class="row mt-2">
+                                                        <div class="col-md-10">
                                                             <ul>
                                                                 <li style="list-style-type: none; font-weight: 600;">
-                                                                    TOTAL
                                                                     <span class="price float-right">
+                                                                        <span> TOTAL : </span>
                                                                         <span id="total">{{ total_price }}</span>
                                                                         <span class="currency">zł</span>
 
