@@ -48,7 +48,8 @@ def registerVendor(request):
     # button register is type submit to it's POST function
     elif request.method == 'POST':
         # store the data and create the user
-        form = UserForm(request.POST)  # request.POST w Django to słownik, który zawiera dane przesłane przez użytkownika do serwera za pomocą metody HTTP POST po kliknieciu przecisku typu submit.
+        form = UserForm(
+            request.POST)  # request.POST w Django to słownik, który zawiera dane przesłane przez użytkownika do serwera za pomocą metody HTTP POST po kliknieciu przecisku typu submit.
         v_form = VendorForm(request.POST, request.FILES)
         if form.is_valid() and v_form.is_valid():
             print('0')
@@ -164,7 +165,8 @@ books = Book.objects.filter(authors__name='J.K. Rowling')
 def vendorDashboard(request):
     vendor = Vendor.objects.get(user=request.user)
     orders = Order.objects.filter(vendors__id__in=[vendor.id],  # vendors__id_in == vendors__in
-                                  is_ordered=True).order_by('-created_at')  # columnName__in=[value1, value2] == WHERE column_name IN (value1, value2, ...);
+                                  is_ordered=True).order_by(
+        '-created_at')  # columnName__in=[value1, value2] == WHERE column_name IN (value1, value2, ...);
     recent_orders = orders[:5]
 
     context = {
@@ -179,7 +181,8 @@ def vendorDashboard(request):
 def vendorOrders(request):
     vendor = Vendor.objects.get(user=request.user)
     orders = Order.objects.filter(vendors__id__in=[vendor.id],  # vendors__id_in == vendors__in
-                                  is_ordered=True).order_by('-created_at')  # columnName__in=[value1, value2] == WHERE column_name IN (value1, value2, ...);
+                                  is_ordered=True).order_by(
+        '-created_at')  # columnName__in=[value1, value2] == WHERE column_name IN (value1, value2, ...);
 
     context = {
         'orders': orders,

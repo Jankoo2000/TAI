@@ -1,5 +1,6 @@
 from . import models
 
+
 def request_object_middleware(get_response):
     # One-time configuration and initialization.
 
@@ -15,6 +16,3 @@ def request_object_middleware(get_response):
         return response
 
     return middleware
-
-
-

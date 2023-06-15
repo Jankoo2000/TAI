@@ -6,6 +6,7 @@ def detectUser(user):
     elif user.role == None or user.is_admin:
         return '/admin'
 
+
 """„/site” odnosi się do katalogu głównego katalogu lub lokalizacji „site”. 
     Nie ma końcowego ukośnika, a adres URL wskazuje określony zasób lub plik w katalogu głównym katalogu „site”.
 

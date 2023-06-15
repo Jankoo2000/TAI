@@ -58,7 +58,6 @@ def checkout(request):
                                                                         'quantity': i.quantity,
                                                                         'total_price': fooditem.price * i.quantity}}
 
-
             print(json_food_data)
             order.total_data = json.dumps(json_food_data, default=float)
             order.save()

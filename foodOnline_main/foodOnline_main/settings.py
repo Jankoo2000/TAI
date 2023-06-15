@@ -16,19 +16,15 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-8mk6c7!1&)t)&g^%&xhcok(5(pfketv-r+2o0cz(0--@yx0674'
+
 SECRET_KEY = config('SECRET_KEY')
-# SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
 DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -56,7 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'orders.request_object.request_object_middleware', # custom middleware created to acess the request object in models.py
+    'orders.request_object.request_object_middleware',
+    # custom middleware created to acess the request object in models.py
 
 ]
 
@@ -83,7 +80,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'foodOnline_main.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -119,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -130,7 +125,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -144,7 +138,6 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -153,4 +146,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 print("base dir path", BASE_DIR)
 
 PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
-SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups' #to open paypal
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'  # to open paypal

@@ -3,7 +3,7 @@ from vendor.models import Vendor
 # Create your models here.
 
 class Category(models.Model):
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE) # CASCADE, which means that if the referenced Vendor instance is deleted, all related instances of MyModel will also be deleted.
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)  # CASCADE, which means that if the referenced Vendor instance is deleted, all related instances of MyModel will also be deleted.
     category_name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField(max_length=250, blank=True)

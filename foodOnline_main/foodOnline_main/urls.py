@@ -21,12 +21,12 @@ from django.conf import settings
 from marketplace import views as MarketplaceViews
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name='admin'),
-    path('', views.home, name='home'),
-    path('', include('accounts.urls')), # function that takes a full Python import path to another URLconf module that should be “included” in this place
-    path('marketplace/', include('marketplace.urls')),
-    path('cart', MarketplaceViews.cart, name='cart'),
+                  path('admin/', admin.site.urls, name='admin'),
+                  path('', views.home, name='home'),
+                  path('', include('accounts.urls')),
+                  path('marketplace/', include('marketplace.urls')),
+                  path('cart', MarketplaceViews.cart, name='cart'),
 
-    path('', include('orders.urls'))
+                  path('', include('orders.urls'))
 
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #25
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 25

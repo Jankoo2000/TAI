@@ -57,7 +57,7 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
-    phone_number = models.CharField(max_length=12, blank=True) # regrex
+    phone_number = models.CharField(max_length=12, blank=True)  # regrex
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
 
     # required fields
@@ -67,7 +67,7 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(auto_now_add=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True) # not to verify account, because if its not active you cant login
+    is_active = models.BooleanField(default=True)  # not to verify account, because if its not active you cant login
     is_superadmin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
@@ -90,7 +90,6 @@ class User(AbstractBaseUser):
         else:
             user_role = 'Customer'
         return user_role
-
 
 
 # when you create user it should also be created
@@ -116,14 +115,13 @@ class UserProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # date is unchangeable
     modified_at = models.DateTimeField(auto_now=True)  # when object is modyfied date will be changed
 
-
     def __str__(self):
         return self.user.email
 
 
 @receiver(post_save, sender=User)
 def post_save_create_profile_receiver(sender, instance, created, **kwargs):
-    #print(created)
+    # print(created)
     if created:
         UserProfile.objects.create(user=instance)
         print('create the user profile')
@@ -137,7 +135,7 @@ def post_save_create_profile_receiver(sender, instance, created, **kwargs):
         print('user is updated')
 
 
-#26 - signal episode
+# 26 - signal episode
 @receiver(pre_save, sender=User)
 def pre_save_profile_receiver(sender, instance, **kwargs):
     print(instance.username, 'this user is being saved')
