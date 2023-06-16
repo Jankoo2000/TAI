@@ -4,6 +4,7 @@ FoodOnline is a page used for ordering food.
 ### Technologies:
 * Backend - Django
 * Frontend - React
+* Database - PostgreSQL
 * Payment - PayU
 
 # Usage
