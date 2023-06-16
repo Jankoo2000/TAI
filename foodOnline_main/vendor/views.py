@@ -1,8 +1,8 @@
+from accounts.views import check_role_vendor
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.defaultfilters import slugify
-from django.contrib import messages
-from accounts.views import check_role_vendor
 from menu.forms import CategoryForm, FoodItemForm
 from menu.models import Category, FoodItem
 from orders.models import Order, OrderedFood
@@ -36,7 +36,7 @@ def fooditems_by_category(request, pk=None):
     context = {
         'foodItems': foodItems
     }
-    print(foodItems)
+    # print(foodItems)
     return render(request, 'vendor/fooditems_by_category.html', context)
 
 
@@ -131,7 +131,7 @@ def add_food(request):
 @user_passes_test(check_role_vendor)
 def edit_food(request, pk=None):
     food = get_object_or_404(FoodItem, pk=pk)
-    print(food)
+    # print(food)
     if request.method == 'POST':
         form = FoodItemForm(request.POST, request.FILES,
                             instance=food)  # podmienienie z instance=category na request.POST
@@ -152,7 +152,7 @@ def edit_food(request, pk=None):
         form.fields['category'].queryset = Category.objects.filter(vendor=Vendor.objects.get(
             user=request.user))  # zeby nie pobieraly sie wszystkie kategorie jedzenia tylko katergorie jedzenia danego sprzedacwy
 
-    print(form)
+    # print(form)
     context = {
         'form': form,
         'food': food,

@@ -35,7 +35,7 @@ def checkout(request):
             order.pin_code = order_form.cleaned_data['pin_code']
             order.total = get_cart_amounts(request)['total_price']
             ###########
-            print('=======CHECKOUT=============')
+            print('=============CHECKOUT=============')
             # order.total_data = json.dump()
             cart_items = Cart.objects.filter(user=request.user)
             vendors_ids = []
@@ -72,7 +72,6 @@ def checkout(request):
             print(order_form.errors)
             messages.success(request, 'Error')
     else:
-        print('------------44-------------')
         user_profile = UserProfile.objects.get(user=request.user)
         default_values = {
             'first_name': request.user.first_name,

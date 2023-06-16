@@ -28,7 +28,7 @@
 											<li>
 												<div class="img-holder">
 													<figure>
-                                                        <a href="#">
+                                                        <a href="/marketplace/{{ vendor.vendor_slug }}">
                                                         {% if vendor.user_profile.profile_picture %}
 														    <img src="{{ vendor.user_profile.profile_picture.url }}" class="img-list wp-post-image" alt=""></a>
 													    {% else %}
@@ -41,11 +41,11 @@
 														<div class="rating-star">
 															<span class="rating-box" style="width: 100%;"></span>
 														</div>
-														<span class="reviews">(1)</span>
+														<span class="reviews">(10)</span>
 													</div>
 													<div class="post-title">
 														<h5>
-															<a href="listing-detail.html">{{ vendor.vendor_name }}</a>
+															<a href="/marketplace/{{ vendor.vendor_slug }}">{{ vendor.vendor_name }}</a>
 														</h5>
 													</div>
 													<div class="delivery-potions">

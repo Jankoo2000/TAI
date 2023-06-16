@@ -1,6 +1,5 @@
-from django.db import models
-
 from accounts.models import UserProfile, User
+from django.db import models
 
 
 # Create your models here.

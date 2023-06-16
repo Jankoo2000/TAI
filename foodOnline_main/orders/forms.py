@@ -1,7 +1,6 @@
 from django import forms
 
 from orders.models import Order
-from marketplace.models import models
 
 
 class OrderForm(forms.ModelForm):

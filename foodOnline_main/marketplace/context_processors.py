@@ -34,5 +34,5 @@ def get_cart_amounts(request):
             fooditem = FoodItem.objects.get(pk=item.fooditem.id)
             total_price += (fooditem.price * item.quantity)
     x = dict(total_price=total_price)
-    print(x)
+    # print(x)
     return dict(total_price=total_price)

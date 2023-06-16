@@ -88,20 +88,15 @@
                                                     <b><span class="currency">zł</span></b>
                                                     <br>
                                                     </span>
-
                                             </li>
-                                                <a href="{% url 'checkout' %}" class="btn btn-danger w-100 p-2 mt-3">  CHECKOUT  </a>
+                                                <a {% if total_price != 0 %} href="{% url 'checkout' %}" {% endif %} class="btn btn-danger w-100 p-2 mt-3">  CHECKOUT  </a>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-
-
 			</div>
         </div>
     </div>

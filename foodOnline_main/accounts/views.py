@@ -52,7 +52,7 @@ def registerVendor(request):
             request.POST)  # request.POST w Django to słownik, który zawiera dane przesłane przez użytkownika do serwera za pomocą metody HTTP POST po kliknieciu przecisku typu submit.
         v_form = VendorForm(request.POST, request.FILES)
         if form.is_valid() and v_form.is_valid():
-            print('0')
+            # print('0')
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             username = form.cleaned_data['username']

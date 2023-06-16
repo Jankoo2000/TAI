@@ -1,7 +1,4 @@
-
-
 {% extends 'base.html' %}
-
 {% block content %}
  		<!-- Main Section Start -->
 		<div class="main-section">
@@ -12,16 +9,13 @@
 							<div class="user-dashboard loader-holder">
 								<div class="user-holder">
                             </div>
-
                             <h4 class="text-center" style="margin-bottom: 0;">WELCOME TO FOODONLINE</h4>
                             <p class="text-center">Please fill this form to get yourself onboarded in the foodOnline marketplace.</p>
                             <hr>
-
                             <div id="restaurant-sets-holder">
                                 <form action="{% url 'registerUser'  %}" class="form-fields-set foodbakery-dev-restaurant-form" method="post">
                                     {% csrf_token %}
                                     {{ form }}
-
                                     {% for field in form %}
                                         {% if field.errors  %}
                                             {% for error in field.errors %}
@@ -29,8 +23,7 @@
                                             {% endfor %}
                                         {% endif %}
                                     {% endfor %}
-                                    <li style="color: red">{{form.non_field_errors}}</li>
-
+                                    <!--li style="color: red">{{form.non_field_errors}}</li-->
                                     <div class="field-holder">
                                         <div class="payment-holder">
                                             <input type="submit" value="REGISTER" id="btn-next-restaurant-information" class="bgcolor">
@@ -38,7 +31,6 @@
                                     </div>
                                     {% include 'includes/alerts.html' %}
                                 </form>
-
                             </div>
 							</div>
 						</div>

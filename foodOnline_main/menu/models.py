@@ -1,5 +1,7 @@
 from django.db import models
 from vendor.models import Vendor
+
+
 # Create your models here.
 
 class Category(models.Model):
@@ -21,8 +23,10 @@ class Category(models.Model):
     def __str__(self):
         return self.category_name
 
+
 class FoodItem(models.Model):
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE) # CASCADE, which means that if the referenced Vendor instance is deleted, all related instances of MyModel will also be deleted.
+    vendor = models.ForeignKey(Vendor,
+                               on_delete=models.CASCADE)  # CASCADE, which means that if the referenced Vendor instance is deleted, all related instances of MyModel will also be deleted.
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='fooditems')
     food_title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=100, unique=True)

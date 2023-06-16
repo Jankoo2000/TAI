@@ -57,7 +57,6 @@ def add_to_cart(request, food_id):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             try:
                 fooditem = FoodItem.objects.get(id=food_id)
-                print(fooditem)
                 try:
                     checkCart = Cart.objects.get(user=request.user, fooditem=fooditem)
                     # increase the cart quantity
@@ -114,7 +113,6 @@ def decrease_cart(request, food_id):
 @login_required(login_url='login')
 def cart(request):
     cart_items = Cart.objects.filter(user=request.user)
-    print(cart_items)
     context = {
         'cart_items': cart_items
     }

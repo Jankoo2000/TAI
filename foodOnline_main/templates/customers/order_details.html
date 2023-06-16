@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+    <h3>{{ user.username }}</h3> {# skad to jest #}
 			<div class="page-section account-header buyer-logged-in">
 				<div class="container">
 					<div class="row">
@@ -50,9 +51,8 @@
                                                             {% endfor %}
                                                         </tbody>
                                                     </table>
-
-                                                    <div class="row mt-2">
-                                                        <div class="col-md-10">
+                                                    <div class="row mt-5">
+                                                        <div class="col-md-6">
                                                             <ul>
                                                                 <li style="list-style-type: none; font-weight: 600;">
                                                                     <span class="price float-right">
